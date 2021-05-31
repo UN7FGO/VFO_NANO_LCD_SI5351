@@ -1,5 +1,7 @@
 // http://un7fgo.gengen.ru (C) 2021
 // https://github.com/UN7FGO 
+//
+// VFO_NANO_LCD_SI5351 Ver.1.3
 // 
 #include <avr/eeprom.h>
 #include <SPI.h>
@@ -475,8 +477,8 @@ void ConfigMenu() {
             if (Par < Mn[Num]) { Par = Mn[Num]; }
             if (Par > Mx[Num]) { Par = Mx[Num]; }
             lcd.setCursor(0, 1);
-            lcd.print("    ");
-            lcd.setCursor(8-log10(Par), 1);
+            lcd.print("         ");
+            lcd.setCursor(8-log10(Par)-0.001, 1);
             lcd.print(Par);
             lcd.print("    ");
             lcd.setCursor(8 - Poss, 1);
