@@ -12,14 +12,12 @@
 #include "si5351.h"
 // Библиотека для обработки энкодера
 #include <RotaryEncoder.h>
-#include <String.h>
 
 Si5351 si5351;
 
 // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
-const int rs = 12, en = 11, d4 = 10, d5 = 9, d6 = 8, d7 = 7;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
   
 // Определяем контакты, к которым у нас подключен энкодер
 #define ENC_CLK_PIN 4
@@ -39,16 +37,16 @@ RotaryEncoder encoder(ENC_DT_PIN, ENC_CLK_PIN);
 // Количество диапазонов и массивы с их параметрами 
 int MAXBAND = 0;
 // массив "текущих частот"  по диапазонам
-unsigned long int cur_freq[10];
+unsigned long int cur_freq[9];
 // массив "максимальных частот" по диапазонам
-unsigned long int max_freq[10];
+unsigned long int max_freq[9];
 // массив "минимальных частот"  по диапазонам
-unsigned long int min_freq[10];
+unsigned long int min_freq[9];
 
 // максимальное количество шагов перестройки частоты
 #define MAXFREQ 4
 // массив "шагов перестройки" в Герцах
-long int d_freq[MAXFREQ]  = {10000, 1000, 100, 10 };
+int d_freq[MAXFREQ]  = {10000, 1000, 100, 10 };
 
 // Прочие пераметры
 // тип ПЧ false - до 10 МГц +, выше 10 МГц-, true - всегда +
@@ -79,15 +77,17 @@ int SLIP_TIME = 200;
 
 // S-meter
 #define STIME 100
+// символы дл S-метра
 byte c_k[8] = {B11111,B11111,B11111,B11111,B11111,B11111,B11111,B11111};
 byte c_p[8] = {B11111,B10001,B10101,B10101,B10101,B10101,B10001,B11111};
 
 // переменные для работы
-unsigned long int current_freq, iif_freq;
-unsigned long int old_freq, freq;
+unsigned long int current_freq;
+unsigned long int old_freq;
 long int pressed, smeter, ssum;
 int Pos, Band, c_Band, nfreq, dfreq, scount, slen;
 float ll;
+
 /* =================================================== */
 void setup() {
   // инициализируем дисплей 16х2
@@ -145,7 +145,7 @@ void setup() {
   bool i2c_found;
   i2c_found = si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0);
   if(!i2c_found)
-  { Serial.println("Device not found on I2C bus!");}
+  { Serial.println("Not found I2C");}
   Wire.setClock(400000L);
   si5351.drive_strength(SI5351_CLK0, SI5351_DRIVE_8MA);  
 
@@ -426,9 +426,9 @@ void ConfigMenu() {
   int Num = 0;
   int maxNum = 21;
  // массивы под пункты меню
-  char*    Ms[22] = {"1.8 MHZ","3.5 MHZ","7 MHZ","10 MHZ","14 MHZ","18 MHZ","21 MHZ","24 MHZ","28 MHZ",
-                     "50 MHZ","IF FREQ","IF TYPE","VFO MULT","SMETER","SLAZY","EXTSW","BFO","BFO FREQ",
-                     "PIXIE","TX SHIFT","SH TYPE","SLIP"};
+  char*    Ms[22] = {"160M","80M","40M","30M","20M","17M","15M","12M","10M",
+                     "6M","IFFREQ","IFTYPE","VFOMULT","SMETER","SLAZY","EXTSW","BFO","BFOFR",
+                     "PIXIE","TXSH","SHTYPE","SLIP"};
   long int Mp[22] = {0,1,1,0,1,0,1,0,1,0, 5000000,0,1, 5, 5,0,0, 5000000,0, 700,3, 2};
   int      Mt[22] = {1,1,1,1,1,1,1,1,1,1,       3,1,2, 2, 2,1,1,       3,1,   2,2, 2};
   long int Mn[22] = {0,0,0,0,0,0,0,0,0,0,       0,0,1, 1, 1,0,0,  100000,0, 400,1, 1};
@@ -752,7 +752,7 @@ unsigned long int freq, param;
     SHIFT_TYPE = param;
   }
   // Время "залипания" частоты на передачу, в миллисекундах
-  param = eeprom_read_dword(180); 
+  param = eeprom_read_dword(184); 
   if (param > 0 && param < 21 ) {
     SLIP_TIME = param * 100;
   }
@@ -774,6 +774,7 @@ int ReadBand() {
 }
 
 void setFreq() {
+  unsigned long int freq;
   // Проверяем выбранный режим учета ПЧ 
   // true - ПЧ всегда прибавляется к текущей частоте
   // false - до 10 МГц прибавляем ПЧ, выше 10 МГц вычитаем ПЧ 
