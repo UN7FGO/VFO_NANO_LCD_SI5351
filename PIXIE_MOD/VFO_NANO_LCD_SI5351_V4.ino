@@ -418,6 +418,9 @@ void Refresh_LCD()
   }
 }
 
+
+void(* resetFunc) (void) = 0;
+
 // Меню
 void ConfigMenu() {
   bool ToExit = false;
@@ -641,6 +644,7 @@ void ConfigMenu() {
   lcd.setCursor(0, 1);
   lcd.print("      OK.       ");
   delay(2000);
+  resetFunc();
 }
 
 void PrintToLCD(long a, char* s, long b, long c) {
@@ -796,3 +800,4 @@ void setFreq() {
   si5351.output_enable(SI5351_CLK0,1);
   old_freq = current_freq;
 }
+
