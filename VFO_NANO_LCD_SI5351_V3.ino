@@ -623,7 +623,7 @@ unsigned long int freq, param;
 
   MAXBAND = 0;
   // считываем данные общих настроек из EEPROM
-  for (int i=0; i<9; i++) {
+  for (int i=0; i<10; i++) {
     Re = eeprom_read_dword(100 + i*4); 
     if ( Re == 1 ) {
       MAXBAND++;
