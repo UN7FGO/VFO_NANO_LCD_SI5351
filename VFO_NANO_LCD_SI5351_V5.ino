@@ -1,4 +1,4 @@
-// http://un7fgo.gengen.ru (C) 2021
+// http://un7fgo.gengen.ru (C) 2021-2022
 // https://github.com/UN7FGO 
 //
 // VFO_NANO_LCD_SI5351 Ver.1.5
@@ -739,10 +739,11 @@ void SetCorrection() {
   bool ToExit;
   // корректировочный коэффициент
   cal_factor = eeprom_read_dword(172); 
-  if (abs(cal_factor) > 100000) {
+  if (abs(cal_factor) > 1000000) {
     cal_factor = 0;
-    eeprom_write_dword(172, cal_factor);     
+    eeprom_write_dword(172, cal_factor);
   }
+  old_cal_factor = cal_factor;
   
   // Start on target frequency
   si5351.set_correction(cal_factor*100, SI5351_PLL_INPUT_XO);
