@@ -35,16 +35,16 @@ RotaryEncoder encoder(ENC_DT_PIN, ENC_CLK_PIN);
 // Количество диапазонов и массивы с их параметрами 
 int MAXBAND = 0;
 // массив "текущих частот"  по диапазонам
-unsigned long int cur_freq[9];
+unsigned long int cur_freq[10];
 // массив "максимальных частот" по диапазонам
-unsigned long int max_freq[9];
+unsigned long int max_freq[10];
 // массив "минимальных частот"  по диапазонам
-unsigned long int min_freq[9];
+unsigned long int min_freq[10];
 
 // максимальное количество шагов перестройки частоты
 #define MAXFREQ 4
 // массив "шагов перестройки" в Герцах
-long int d_freq[MAXFREQ]  = {10000, 1000, 100, 10 };
+unsigned long int d_freq[MAXFREQ]  = {10000, 1000, 100, 10 };
 
 // Прочие пераметры
 // тип ПЧ false - до 10 МГц +, выше 10 МГц-, true - всегда +
@@ -81,6 +81,7 @@ float ll;
 /* =================================================== */
 void setup() {
 
+  Serial.begin(9600);
   // инициализируем модуль синтезатора
   bool i2c_found;
   i2c_found = si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0);
@@ -636,8 +637,8 @@ void PrintToLCD(long a, char* s, long b, long c) {
 
 
 void ReadConfig() {
-int Fn[10] = {1500, 3000, 5500,  9000, 13500, 17500, 20500, 24500, 26500, 45000};
-int Fx[10] = {2500, 4000, 7500, 12100, 16000, 19500, 22000, 26500, 31000, 55000};
+unsigned int Fn[10] = {1500, 3000, 5500,  9000, 13500, 17500, 20500, 24500, 26500, 45000};
+unsigned int Fx[10] = {2500, 4000, 7500, 11100, 15000, 19500, 22000, 25500, 31000, 55000};
 unsigned long int freq, param;
 
   MAXBAND = 0;
@@ -649,6 +650,9 @@ unsigned long int freq, param;
       freq = eeprom_read_dword((MAXBAND-1)*4+4); 
       max_freq[MAXBAND-1] = (unsigned long int)(Fx[i]) * 1000;
       min_freq[MAXBAND-1] = (unsigned long int)(Fn[i]) * 1000;
+      Serial.println(freq); 
+      Serial.println(max_freq[MAXBAND-1]);
+      Serial.println(min_freq[MAXBAND-1]);
       if (freq<min_freq[MAXBAND-1] || freq>max_freq[MAXBAND-1] ) {
         freq = (min_freq[MAXBAND-1]+max_freq[MAXBAND-1])/2 * 1000;
         eeprom_write_dword((MAXBAND-1)*4+4, freq); 
