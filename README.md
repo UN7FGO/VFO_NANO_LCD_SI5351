@@ -1,7 +1,7 @@
 # VFO_NANO_LCD_SI5351
 Arduino based frequency synthesizer
 
-Последние изменения 24.01.2022,
+Последние изменения 06.04.2022,
 Версия 1.5
 
 Добавлены:
