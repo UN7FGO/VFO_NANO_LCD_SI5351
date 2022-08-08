@@ -405,7 +405,7 @@ void ConfigMenu() {
   unsigned long int Mn[18] = {0,0,0,0,0,0,0,0,0,0,       0,0,1, 1, 1,0,0,  100000};
   unsigned long int Mx[18] = {1,1,1,1,1,1,1,1,1,1,50000000,1,4,20,20,1,2,50000000};
   unsigned long int Par, Press;
-  byte Dec;
+   unsigned long int  Dec;
 
   // Сообщаем о том, что мы в конфигурационном меню
   lcd.clear();
