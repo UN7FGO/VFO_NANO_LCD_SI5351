@@ -43,3 +43,6 @@ Arduino based frequency synthesizer
 Для тех, кто никогда не работал с Arduino, но хочет попытаться собрать синтезатор самостоятельно, читаем инструкцию, так же на русском языке - https://github.com/UN7FGO/VFO_NANO_LCD_SI5351/blob/main/How_to_program_Arduino_Rus.pdf
 
 
+
+![](https://komarev.com/ghpvc/?username=your-github-username)
+
