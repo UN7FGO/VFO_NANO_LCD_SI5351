@@ -17,3 +17,10 @@
 ### Внимание!
 ### Версия экспериментальная. Все замечания и предложения можно отправлять на un7fgo(dog)gmail.com 
 
+Печатная плата
+
+![печатная плата](https://github.com/UN7FGO/VFO_NANO_LCD_SI5351/blob/main/V8/VFO_V8_2D.jpg)
+
+3Д-модель, без дисплея.
+
+![модель](https://github.com/UN7FGO/VFO_NANO_LCD_SI5351/blob/main/V8/VFO_V8_3D.jpg)
