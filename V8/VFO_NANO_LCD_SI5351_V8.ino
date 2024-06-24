@@ -835,7 +835,7 @@ void SetCorrection() {
 
 // Выставляем номер диапзона в двоичном виде на выводы микроктонтроллера
 void SendBand() {
-  int b = Band;
+  int b = Band + 1;
   for (int i=0; i<4; i++) {
     digitalWrite (bandPins[i],LOW);
   }
