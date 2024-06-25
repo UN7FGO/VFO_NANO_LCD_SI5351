@@ -4,6 +4,8 @@
   
 Arduino based frequency synthesizer
 
+Экспериментальная версия, с выходом на дешифратор диапазонов - https://github.com/UN7FGO/VFO_NANO_LCD_SI5351/tree/main/V8
+
 Последние изменения 06.04.2022,
 Версия 1.5
 
@@ -13,7 +15,6 @@ Arduino based frequency synthesizer
 - дополнено описание работы синтезатора.
 
 Файл программы - VFO_NANO_LCD_SI5351_V5.ino
-
 
 
 Конструкция синтезатора на доступных модулях.
